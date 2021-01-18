@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+
+.demo-book {
+  background-image: url('https://cssauthor.com/wp-content/uploads/2015/10/Old-painted-wood.jpg');
+}
+
+.page {
+  background-color: antiquewhite;
+  box-shadow: inset -7px 0 30px -7px rgba(0,0,0,.4);
+}
