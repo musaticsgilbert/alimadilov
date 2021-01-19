@@ -11,8 +11,7 @@
 }
 
 .pace .pace-progress {
-  background-color: #adc5c9;
-  /* background-image: url('https://cssauthor.com/wp-content/uploads/2015/10/Old-painted-wood.jpg'); */
+  background-color: floralwhite;
   position: fixed;
   z-index: -1;
   top: 0;
