@@ -1,9 +1,10 @@
 import React from 'react'
 import HTMLFlipBook from "react-pageflip";
+import "./ImageBook.scss";
 
 const PageCover = React.forwardRef((props, ref) => {
   return (
-    <div className="page page-cover" ref={ref} data-density="hard" >
+    <div className={"page page-cover page-cover-" + props.pos} ref={ref} data-density="hard" >
       <div className="page-content" >
         <h2>{props.children} </h2>
       </div>
@@ -13,7 +14,7 @@ const PageCover = React.forwardRef((props, ref) => {
 
 const Page = React.forwardRef((props, ref) => {
   return (
-    <div className="page" ref={ref}>
+    <div className="page" ref={ref} data-density={props.density | "soft"}>
       <div className="page-content">
         <h2 className="page-header">{props.imageCaption}</h2>
         {/* {(props.image !== undefined) ?
@@ -28,7 +29,7 @@ const Page = React.forwardRef((props, ref) => {
             <img
               alt={props.imageCaption}
               src={props.image}
-              style={{ backgroundImage: "url(" + props.image + ")", objectFit: 'contain' }}
+              // style={{ backgroundImage: "url(" + props.image + ")", objectFit: 'contain' }}
               onClick={showFullImage}
               onLoad={setDimensions}
             ></img>
@@ -52,13 +53,49 @@ const Page = React.forwardRef((props, ref) => {
   }
 });
 
-class DemoBook extends React.Component {
+class ImageBook extends React.Component {
   constructor(props) {
     super(props);
+
+    const pages = [
+      <PageCover key={0} pos="top">Alim Adilov képeskönyve</PageCover>,
+      <Page key={1} imageCaption={"Tartalomjegyzék"}>
+        <ol>
+          <li>Önéletrajz</li>
+          <li>Tengerparton</li>
+          <li>Cserépedények</li>
+          <li>Virágok az ablakban</li>
+          <li>Délben</li>
+        </ol>
+      </Page>,
+      <Page key={2} number={1} imageCaption={"Önéletrajz"}>
+        <article style={{ padding: '2%' }}>
+          Alim Adilov is a painter, was born in 1963, Taskent, Uzbekistan.
+          During his elementary studies he was enrolled to the best drawing course in the city.<br />
+          In 1979 he started the secondary art school, where strict but great knowledged teachers taught him, e.g. the Korean Emil-Ki- Gajt, who did several successful book illustrations. In his 5th year, he learned on advanced level, he grew up as an artist who is ready to work full responsibility.<br />
+          After 2 years military service, he applied to the world famous Rjepin Art Academy.<br />
+          He had teachers like the internationally reputed Vitrugonszkji.<br />
+          After graduating he went to England where he was a designer at a big company, so soon he could start working individually. In 1991, he got a work from an elegant gallery from the London Sloan Square, to organize an exhibition from his works. His all paintings were purchased in one.<br />
+          After settling down in Hungary, soon he became popular both professional and artistic field. Besides his professional success, he found his personal happiness, found his wife they have 2 great sons. In the next couple of years, he was the regular invited member of the art art camps in Hungary, and international camps. He had many separately and group exhibition in Hungary and internationally. Now he has a constant exhibition in Madeira.<br /><br />
+
+          He is the member of the Hungarian Art Association.<br />
+          His paintings are often bought because this way the buyers can take home a slice from the East, from their holiday. The vivid colors of the paintings are reflectiong the beach, the market, so the owners can feel these moments in their weekdays.<br />
+          Favourably, he works on those topics he experienced on his journey. Cities, landscapes, houses but also portraits, still lifes.All over the world he had solo and organised exhibitions, also he has a permanent exhibition on Madeira
+        </article>
+      </Page>,
+      <Page key={3} number={2} image={process.env.PUBLIC_URL + "/h608.jpg"} imageCaption={"Tengerparton"}></Page>,
+      <Page key={4} number={3} image={process.env.PUBLIC_URL + "/h503.jpg"} imageCaption={"Cserépedények"}></Page>,
+      <Page key={5} number={4} image={process.env.PUBLIC_URL + "/h607.jpg"} imageCaption={"Virágok az ablakban"}></Page>,
+      <Page key={6} number={5} image={process.env.PUBLIC_URL + "/f1014.jpg"} imageCaption={"Délben"}></Page>,
+      <PageCover key={7} pos="bottom">  </PageCover>
+    ]
 
     this.state = {
       page: 0,
       totalPage: 0,
+      orientation: 'landscape',
+      state: 'read',
+      pages: pages
     };
   }
 
@@ -102,15 +139,15 @@ class DemoBook extends React.Component {
 
   render() {
     return (
-      <div className="no-select book-container" style={{ maxHeight: '100vh', maxWidth: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div className="container-md no-select book-container" style={{ maxHeight: '100vh', maxWidth: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
         <HTMLFlipBook
-          width={500}
-          height={700}
-          // minWidth={315}
-          // maxWidth={1000}
-          // minHeight={400}
-          // maxHeight={1533}
-          // size="stretch"
+          width={700}
+          height={900}
+          minWidth={300}
+          maxWidth={1000}
+          minHeight={400}
+          maxHeight={1700}
+          size="stretch"
           maxShadowOpacity={0.5}
           showCover={true}
           mobileScrollSupport={true}
@@ -119,36 +156,11 @@ class DemoBook extends React.Component {
           onChangeOrientation={this.onChangeOrientation}
           onChangeState={this.onChangeState}
           className="image-book flip-book html-book"
+          // style={{ backgroundImage: "url(https://cssauthor.com/wp-content/uploads/2015/10/Old-painted-wood.jpg)" }}
+
           ref={(el) => (this.flipBook = el)}
         >
-
-          <PageCover>Alim Adilov képeskönyve</PageCover>
-          <Page imageCaption={"Tartalomjegyzék"}>
-            <ol>
-              <li>Önéletrajz</li>
-              <li>Tengerparton</li>
-              <li>Cserépedények</li>
-              <li>Virágok az ablakban</li>
-              <li>Délben</li>
-            </ol>
-          </Page>
-          <Page number={1} imageCaption={"Önéletrajz"}>
-            <article style={{ padding: '2%' }}>
-              <span>Alim Adilov, magyar szórenddel Adilov Alim (Taskent, 1963– ) Magyarországon élő üzbég festőművész.</span>
-              <h4>Élete</h4>
-              <span>
-                1963-ban született Üzbegisztán fővárosában, Taskentben, édesapja grafikus, édesanyja iparművész volt. Gyermekéveit is ott töltötte, szülei hatására már akkor sokat rajzolt, céltudatosan művész akart lenni. Ennek érdekében több rajzszakkörbe is járt, majd egy képzőművészeti középiskolában érettségizett; mindig törekedett arra, hogy a kiválóak közül is a legjobb legyen. Katonai szolgálatát Kazahsztánban teljesítette, majd a szentpétervári Repin Képzőművészeti Akadémián végezte tanulmányait, mesterei Mojszenkó és Vitrugatszkij voltak. 1991 és 1993 között a londoni akadémián fejlesztette tovább a tudását, egy ottani kétéves kurzus elvégzésével.
-                <br />
-                1993-ban Magyarországon települt le; 2003-ban költözött Solymárra, szándéka szerint hosszú időre; választásában motiválta Budapest közelsége mellett a szép környezet, és a táj nyugalma, inspiráló békéje is. 2004 óta tagja a Magyar Alkotóművészek Országos Egyesületének.
-              </span>
-            </article>
-          </Page>
-          <Page number={2} image={process.env.PUBLIC_URL + "/h608.jpg"} imageCaption={"Tengerparton"}></Page>
-          <Page number={3} image={process.env.PUBLIC_URL + "/h503.jpg"} imageCaption={"Cserépedények"}></Page>
-          <Page number={4} image={process.env.PUBLIC_URL + "/h607.jpg"} imageCaption={"Virágok az ablakban"}></Page>
-          <Page number={5} image={process.env.PUBLIC_URL + "/f1014.jpg"} imageCaption={"Délben"}></Page>
-          <PageCover>  </PageCover>
-
+          {this.state.pages}
         </HTMLFlipBook>
 
         <div className="pageturner-container">
@@ -168,4 +180,4 @@ class DemoBook extends React.Component {
   }
 }
 
-export default DemoBook;
+export default ImageBook;
