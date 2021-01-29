@@ -51,7 +51,9 @@ const Page = React.forwardRef((props, ref) => {
   function showFullImage(e) {
     console.log('props', props);
     console.log('ref', ref);
-    props.onImageClick(e);
+    e.target.requestFullscreen().then(() => {
+
+    });
   }
 });
 
@@ -95,7 +97,7 @@ class ImageBook extends React.Component {
           Állandó kiállítás: Madeira
         </article>
       </Page>,
-      <Page key={3} number={2} image={process.env.PUBLIC_URL + "/h608.jpg"} imageCaption={"Tengerparton"} onImageClick={this.renderFullScreen}></Page>,
+      <Page key={3} number={2} image={process.env.PUBLIC_URL + "/h608.jpg"} imageCaption={"Tengerparton"}></Page>,
       <Page key={4} number={3} image={process.env.PUBLIC_URL + "/h503.jpg"} imageCaption={"Cserépedények"}></Page>,
       <Page key={5} number={4} image={process.env.PUBLIC_URL + "/h607.jpg"} imageCaption={"Virágok az ablakban"}></Page>,
       <Page key={6} number={5} image={process.env.PUBLIC_URL + "/f1014.jpg"} imageCaption={"Átjáró"}></Page>,
@@ -119,16 +121,6 @@ class ImageBook extends React.Component {
     this.flipBook.getPageFlip().flipPrev();
   };
 
-  renderFullScreen = (e) => {
-    // console.log(e.target);
-    console.log(this.flipBook);
-    this.flipBook.pageFlip.setting.useMouseEvents = false;
-    e.target.requestFullscreen().then(() => {
-
-      console.log(document.fullscreenElement);
-    });
-  }
-
   onPage = (e) => {
     this.setState({
       page: e.data,
@@ -149,8 +141,6 @@ class ImageBook extends React.Component {
   }
 
   componentDidMount() {
-    console.log('TODO: Fork page-flip and react-pageflip and make an option to flip only if the clicked element is not an image (UI/UI.ts onMouseUp)');
-    console.log('TODO: on image click make it appear in full size in a popup)');
     this.setState({
       totalPage: this.flipBook.getPageFlip().getPageCount(),
     });
