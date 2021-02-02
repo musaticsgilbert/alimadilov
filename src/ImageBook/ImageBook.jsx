@@ -65,11 +65,11 @@ class ImageBook extends React.Component {
       <PageCover key={0} pos="top">Alim Adilov képeskönyve</PageCover>,
       <Page key={1} imageCaption={"Tartalomjegyzék"}>
         <ol>
-          <li>Önéletrajz</li>
-          <li>Tengerparton</li>
-          <li>Cserépedények</li>
-          <li>Virágok az ablakban</li>
-          <li>Délben</li>
+          <li><a href="1" onClick={this.navigateToPage}>Önéletrajz</a></li>
+          <li><a href="2" onClick={this.navigateToPage}>Tengerparton</a></li>
+          <li><a href="3" onClick={this.navigateToPage}>Cserépedények</a></li>
+          <li><a href="4" onClick={this.navigateToPage}>Virágok az ablakban</a></li>
+          <li><a href="5" onClick={this.navigateToPage}>Átjáró</a></li>
         </ol>
       </Page>,
       <Page key={2} number={1} imageCaption={"Önéletrajz"}>
@@ -114,36 +114,66 @@ class ImageBook extends React.Component {
   }
 
   nextButtonClick = () => {
-    this.flipBook.getPageFlip().flipNext();
+    this.setState((state, props) => ({
+      page: (state.totalPage > state.page) ? state.page + 1 : state.page,
+    }), (e) => {
+      this.flipToPage();
+    });
   };
 
   prevButtonClick = () => {
-    this.flipBook.getPageFlip().flipPrev();
+    this.setState((state, props) => ({
+      page: (0 < state.page) ? state.page - 1 : state.page,
+    }), () => {
+      this.flipToPage();
+    });
   };
 
   onPage = (e) => {
-    this.setState({
+    this.setState((state, props) => ({
       page: e.data,
+    }), () => {
+      // eslint-disable-next-line no-restricted-globals
+      history.pushState(e.data, '', e.data);
     });
   };
 
   onChangeOrientation = (e) => {
-    this.setState({
+    this.setState((state, props) => ({
       orientation: e.data,
-    });
+    }));
   }
 
   onChangeState = (e) => {
-    console.log(e);
-    this.setState({
+    // console.log(e);
+    this.setState((state, props) => ({
       state: e.data,
+    }));
+  }
+
+  navigateToPage = (e) => {
+    e.preventDefault();
+    console.dir(e.target.pathname.substring(1));
+    this.setState((state, props) => ({
+      page: Number(e.target.pathname.substring(1)),
+    }), () => {
+      this.flipToPage();
+      // eslint-disable-next-line no-restricted-globals
+      history.pushState(e.target.href, '', e.target.href);
     });
   }
 
+  flipToPage = () => {
+    console.log(this.state.page);
+    this.flipBook.getPageFlip().flip(this.state.page);
+  }
+
   componentDidMount() {
-    this.setState({
+    // eslint-disable-next-line no-restricted-globals
+    console.log(history.state);
+    this.setState((state, props) => ({
       totalPage: this.flipBook.getPageFlip().getPageCount(),
-    });
+    }));
   }
 
   render() {
@@ -185,8 +215,6 @@ class ImageBook extends React.Component {
             [<span>{this.state.page}</span> of <span> {this.state.totalPage} </span>]
 
             <button type="button" onClick={this.nextButtonClick}>Következő oldal</button>
-
-            {/* <button type="button" onClick={this.renderFullScreen}>Teljes képernyős mód</button> */}
           </div>
         </div>
       </div>
