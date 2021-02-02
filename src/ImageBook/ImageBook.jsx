@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react'
 import HTMLFlipBook from "m-react-pageflip";
 import "./ImageBook.scss";
@@ -9,7 +10,7 @@ class ImageBook extends React.Component {
 
     const pages = [
       <PageCover key={0} pos="top">Alim Adilov képeskönyve</PageCover>,
-      <Page key={1} imageCaption={"Tartalomjegyzék"}>
+      <Page key={1} no_animation imageCaption={"Tartalomjegyzék"}>
         <ol>
           <li><a href="1" onClick={this.navigateToPage}>Önéletrajz</a></li>
           <li><a href="2" onClick={this.navigateToPage}>Tengerparton</a></li>
@@ -99,41 +100,64 @@ class ImageBook extends React.Component {
 
   navigateToPage = (e) => {
     e.preventDefault();
-    console.dir(e.target.pathname.substring(1));
+    // console.dir(e.target.pathname.substring(1).split('/')[1]);
     this.setState((state, props) => ({
-      page: Number(e.target.pathname.substring(1)),
+      page: Number(e.target.pathname.substring(1).split('/')[1]),
     }), () => {
       this.flipToPage();
-      // eslint-disable-next-line no-restricted-globals
-      history.pushState(e.target.href, '', e.target.href);
     });
   }
 
   flipToPage = () => {
-    console.log(this.state.page);
-    this.flipBook.getPageFlip().flip(this.state.page);
+    // console.log(this.state.page);
+    this.flipBook.getPageFlip().flip(this.state.page + 1);
+  }
+
+  // https://stackoverflow.com/a/175787
+  isNumeric(str) {
+    if (typeof str != "string") return false // we only process strings!  
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+      !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
   }
 
   componentDidMount() {
-    // eslint-disable-next-line no-restricted-globals
-    console.log(history.state);
+
+    var page = this.setupRoute();
     this.setState((state, props) => ({
       totalPage: this.flipBook.getPageFlip().getPageCount(),
-    }));
+      page: page
+    }), () => {
+      this.flipToPage();
+    });
+  }
+
+  setupRoute() {
+    console.log('window.location.pathname', window.location.pathname)
+    var page = 0;
+    if (this.pathArray().length > 3 || !this.isNumeric(this.pathArray()[2])) {
+      history.pushState(window.location.pathname, '', '/book/0');
+    } else {
+      page = Number(this.pathArray()[2]);
+    }
+    return page;
+  }
+
+  pathArray = () => {
+    return window.location.pathname.split('/');
   }
 
   render() {
     return (
-      <div className="container-md no-select book-container"
+      <div className="no-select book-container"
       // style={{ maxHeight: '100vh', maxWidth: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}
       >
         <HTMLFlipBook
           width={700}
           height={900}
           minWidth={300}
-          maxWidth={1000}
+          maxWidth={1200}
           minHeight={400}
-          maxHeight={1700}
+          maxHeight={2000}
           size="stretch"
           maxShadowOpacity={0.5}
           showCover={true}
@@ -144,7 +168,7 @@ class ImageBook extends React.Component {
           onFlip={this.onPage}
           onChangeOrientation={this.onChangeOrientation}
           onChangeState={this.onChangeState}
-          swipeDistance={20}
+          swipeDistance={10}
           className="image-book flip-book html-book"
           useMouseEvents={true}
 
@@ -153,7 +177,7 @@ class ImageBook extends React.Component {
           {this.state.pages}
         </HTMLFlipBook>
 
-        <div className="pageturner-container">
+        {/* <div className="pageturner-container">
           <div>
 
             <button type="button" onClick={this.prevButtonClick}>Előző oldal</button>
@@ -162,7 +186,7 @@ class ImageBook extends React.Component {
 
             <button type="button" onClick={this.nextButtonClick}>Következő oldal</button>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

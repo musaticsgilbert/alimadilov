@@ -33,14 +33,13 @@ body {
   background-size: cover;
 }
 
-.page {
-  background-color: antiquewhite;
-  box-shadow: inset -7px 0 30px -7px rgba(0,0,0,.4), 0 0 20px 0 rgba(0, 0, 0, 0.5);
-}
-
 .pageturner-container {
   margin: 1rem;
   text-align: center;
+}
+
+.no-animation:hover {
+  transform: none !important;
 }
 
 
@@ -51,6 +50,7 @@ body {
   background-color: hsl(35, 55, 98);
   color: hsl(35, 35, 35);
   border: solid 1px hsl(35, 20, 70);
+  box-shadow: inset -7px 0 30px -7px rgba(0,0,0,.4), 0 0 20px 0 rgba(0, 0, 0, 0.5);
 
   overflow: hidden;
 

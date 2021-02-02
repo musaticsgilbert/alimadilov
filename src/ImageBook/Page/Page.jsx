@@ -11,8 +11,9 @@ const PageCover = React.forwardRef((props, ref) => {
 });
 
 const Page = React.forwardRef((props, ref) => {
+  var pageClass = 'page ' + (props.no_animation ? 'no-animation' : '');
   return (
-    <div className="page" ref={ref} data-density={props.density | "soft"}>
+    <div className={pageClass} ref={ref} data-density={props.density | "soft"}>
       <div className="page-content">
         <h2 className="page-header">{props.imageCaption}</h2>
         {/* {(props.image !== undefined) ?
