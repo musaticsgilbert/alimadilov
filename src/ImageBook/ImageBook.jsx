@@ -10,7 +10,7 @@ class ImageBook extends React.Component {
 
     const pages = [
       <PageCover key={0} pos="top">Alim Adilov képeskönyve</PageCover>,
-      <Page key={1} no_animation imageCaption={"Tartalomjegyzék"}>
+      <Page key={1} imageCaption={"Tartalomjegyzék"}>
         <ol>
           <li><a href="1" onClick={this.navigateToPage}>Önéletrajz</a></li>
           <li><a href="2" onClick={this.navigateToPage}>Tengerparton</a></li>
@@ -115,7 +115,7 @@ class ImageBook extends React.Component {
 
   // https://stackoverflow.com/a/175787
   isNumeric(str) {
-    if (typeof str != "string") return false // we only process strings!  
+    if (typeof str != "string") return false // we only process strings!
     return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
       !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
   }
@@ -127,7 +127,7 @@ class ImageBook extends React.Component {
       totalPage: this.flipBook.getPageFlip().getPageCount(),
       page: page
     }), () => {
-      this.flipToPage();
+      // this.flipToPage();
     });
   }
 
@@ -148,29 +148,32 @@ class ImageBook extends React.Component {
 
   render() {
     return (
-      <div className="no-select book-container"
+      // <div className="no-select book-container"
+      <div className="book-container container-md"
       // style={{ maxHeight: '100vh', maxWidth: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}
       >
         <HTMLFlipBook
-          width={700}
-          height={900}
-          minWidth={300}
-          maxWidth={1200}
-          minHeight={400}
-          maxHeight={2000}
+          width={550}
+          height={733}
           size="stretch"
+          minWidth={315}
+          minHeight={400}
+          maxWidth={1000}
+          maxHeight={1533}
           maxShadowOpacity={0.5}
+          flippingTime={700}
           showCover={true}
           mobileScrollSupport={true}
-          flippingTime={700}
           clickEventForward={['img', 'button', 'a']}
           drawShadow={true}
+          swipeDistance={0}
+          useMouseEvents={true}
+
           onFlip={this.onPage}
           onChangeOrientation={this.onChangeOrientation}
           onChangeState={this.onChangeState}
-          swipeDistance={10}
-          className="image-book flip-book html-book"
-          useMouseEvents={true}
+
+          className="image-book"
 
           ref={(el) => (this.flipBook = el)}
         >

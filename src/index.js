@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import ImageBook from './ImageBook/ImageBook';
 import reportWebVitals from './reportWebVitals';
+// import DemoBlock from './DemoBlock';
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* <DemoBlock /> */}
     <ImageBook />
   </React.StrictMode>,
   document.getElementById('root')

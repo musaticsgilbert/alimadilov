@@ -1,14 +1,27 @@
+html {
+  // No scrollbars
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('https://cssauthor.com/wp-content/uploads/2015/10/Old-painted-wood.jpg');
+  // padding-bottom: 10%;
+
+  // No scrollbars
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+  box-sizing: content-box; /* So the width will be 100% + 17px */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
-#root {
-  background-image: url('https://cssauthor.com/wp-content/uploads/2015/10/Old-painted-wood.jpg');
 }
