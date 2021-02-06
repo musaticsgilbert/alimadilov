@@ -3,9 +3,17 @@ import './Page.scss';;
 
 const PageCover = React.forwardRef((props, ref) => {
   return (
-    <div className={"page page-cover page-cover-" + props.pos} ref={ref} data-density="hard" >
-      <div className="page-content" >
-        <h2>{props.children} </h2>
+    <div
+      className={'page page-cover page-cover-' + props.pos}
+      style={{ backgroundImage: 'url(' + props.image + ')' }}
+      ref={ref}
+      data-density='hard'
+    >
+      {(props.bookmark === true) ?
+        <div className='bookmark' title={'Kinyitás a könyvjelzőnél'} onClick={props.onBookmark}></div> : null
+      }
+      <div className='page-content'>
+        <h2>{props.children}</h2>
       </div>
     </div>
   );
@@ -14,13 +22,13 @@ const PageCover = React.forwardRef((props, ref) => {
 const Page = React.forwardRef((props, ref) => {
   var pageClass = 'page ' + (props.no_animation ? 'no-animation' : '');
   return (
-    <div className={pageClass} ref={ref} data-density={props.density | "soft"}>
-      <div className="page-content">
+    <div className={pageClass} ref={ref} data-density={props.density | 'soft'}>
+      <div className='page-content'>
         {(props.pageTitle !== undefined) ?
-          <h2 className="page-header">{props.pageTitle}</h2> : null
+          <h2 className='page-header'>{props.pageTitle}</h2> : null
         }
         {(props.image !== undefined) ?
-          <div className="page-image">
+          <div className='page-image'>
             <figure>
               <img
                 alt={props.imageCaption}
@@ -33,8 +41,8 @@ const Page = React.forwardRef((props, ref) => {
           </div>
           : null
         }
-        {(props.children) ? <div className="page-text">{props.children}</div> : null}
-        <div className="page-footer">{isNaN(props.pageNumber) ? '' : props.pageNumber}</div>
+        {(props.children) ? <div className='page-text'>{props.children}</div> : null}
+        <div className='page-footer'>{isNaN(props.pageNumber) ? '' : props.pageNumber}</div>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ class ImageBook extends React.Component {
     super(props);
 
     const pages = [
-      <PageCover key={0} pos='top'>Alim Adilov képeskönyve</PageCover>,
+      <PageCover key={0} pos='top' bookmark image={process.env.PUBLIC_URL + '/h608.jpg'} onBookmark={this.openBookmark}>Alim Adilov képeskönyve</PageCover>,
       <Page key={1} pageNumber={1} pageTitle={'Önéletrajz'}>
         {/* <article style={{ padding: '2%' }}>
           Alim Adilov is a painter, was born in 1963, Taskent, Uzbekistan.
@@ -48,7 +48,7 @@ class ImageBook extends React.Component {
       <Page key={4} pageNumber={4} image={process.env.PUBLIC_URL + '/h503.jpg'} imageCaption={'Cserépedények'}></Page>,
       <Page key={5} pageNumber={5} image={process.env.PUBLIC_URL + '/h607.jpg'} imageCaption={'Virágok az ablakban'}></Page>,
       <Page key={6} pageNumber={6} image={process.env.PUBLIC_URL + '/f1014.jpg'} imageCaption={'Átjáró'}></Page>,
-      <PageCover key={7} pos='bottom'></PageCover>
+      <PageCover key={7} image={process.env.PUBLIC_URL + '/h608.jpg'} pos='bottom'></PageCover>
     ];
 
     this.state = {
