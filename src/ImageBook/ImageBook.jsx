@@ -10,7 +10,7 @@ class ImageBook extends React.Component {
 
     const pages = [
       <PageCover key={0} pos='top'>Alim Adilov képeskönyve</PageCover>,
-      <Page key={1} pageNumber={1} imageCaption={'Önéletrajz'}>
+      <Page key={1} pageNumber={1} pageTitle={'Önéletrajz'}>
         {/* <article style={{ padding: '2%' }}>
           Alim Adilov is a painter, was born in 1963, Taskent, Uzbekistan.
           During his elementary studies he was enrolled to the best drawing course in the city.<br />
@@ -35,7 +35,7 @@ class ImageBook extends React.Component {
           Állandó kiállítás: Madeira
         </article>
       </Page>,
-      <Page key={2} pageNumber={2} imageCaption={'Tartalomjegyzék'}>
+      <Page key={2} pageNumber={2} pageTitle={'Tartalomjegyzék'}>
         <ol>
           <li><a href='1' onClick={this.navigateToPage}>Önéletrajz</a></li>
           <li><a href='2' onClick={this.navigateToPage}>Tengerparton</a></li>
@@ -49,7 +49,7 @@ class ImageBook extends React.Component {
       <Page key={5} pageNumber={5} image={process.env.PUBLIC_URL + '/h607.jpg'} imageCaption={'Virágok az ablakban'}></Page>,
       <Page key={6} pageNumber={6} image={process.env.PUBLIC_URL + '/f1014.jpg'} imageCaption={'Átjáró'}></Page>,
       <PageCover key={7} pos='bottom'></PageCover>
-    ]
+    ];
 
     this.state = {
       bookmark: null,
@@ -60,6 +60,22 @@ class ImageBook extends React.Component {
       totalPage: 0,
     };
   }
+
+  // Lifecycle management
+  componentDidMount() {
+    const page = this.setupRoute();
+    const bookmark = localStorage.getItem('bookmark');
+
+    this.setState((state, props) => ({
+      totalPage: this.flipBook.getPageFlip().getPageCount(),
+      page: page,
+      bookmark: bookmark
+    }), () => {
+      this.flipToPage();
+    });
+  }
+
+  // Event handlers
 
   nextButtonClick = () => {
     this.setState((state, props) => ({
@@ -98,26 +114,9 @@ class ImageBook extends React.Component {
     }));
   }
 
-  navigateToPage = (e) => {
-    e.preventDefault();
-    // console.dir(e.target.pathname.substring(1).split('/')[1]);
-    this.setState((state, props) => ({
-      page: Number(e.target.pathname.substring(1).split('/')[1]),
-    }), () => {
-      this.flipToPage();
-    });
-  }
-
   flipToPage = () => {
     // console.log(this.state.page);
     this.flipBook.getPageFlip().flip(this.state.page + 1);
-  }
-
-  // https://stackoverflow.com/a/175787
-  isNumeric(str) {
-    if (typeof str != 'string') return false // we only process strings!
-    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-      !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
   }
 
   addPageToBookmark = () => {
@@ -136,14 +135,13 @@ class ImageBook extends React.Component {
     });
   }
 
-  componentDidMount() {
-    const page = this.setupRoute();
-    const bookmark = localStorage.getItem('bookmark');
+  // Routing
 
+  navigateToPage = (e) => {
+    e.preventDefault();
+    // console.dir(e.target.pathname.substring(1).split('/')[1]);
     this.setState((state, props) => ({
-      totalPage: this.flipBook.getPageFlip().getPageCount(),
-      page: page,
-      bookmark: bookmark
+      page: Number(e.target.pathname.substring(1).split('/')[1]),
     }), () => {
       this.flipToPage();
     });
@@ -160,8 +158,16 @@ class ImageBook extends React.Component {
     return page;
   }
 
+  // Utility functions
   pathArray = () => {
     return window.location.pathname.split('/');
+  }
+
+  // https://stackoverflow.com/a/175787
+  isNumeric(str) {
+    if (typeof str != 'string') return false // we only process strings!
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+      !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
   }
 
   render() {
@@ -170,6 +176,18 @@ class ImageBook extends React.Component {
       <div className='book-container container-md'
       // style={{ maxHeight: '100vh', maxWidth: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}
       >
+        <button type={'button'} className={'mt-1 btn btn-success'} onClick={this.addPageToBookmark} title={'Oldal könyvjelzőzése'}>
+          <svg xmlns={'http://www.w3.org/2000/svg'} width={'16'} height={'16'} fill={'currentColor'} className={'bi bi-bookmark-plus'} viewBox={'0 0 16 16'}>
+            <path fillRule={'evenodd'} d={'M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z'} />
+            <path d={'M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z'} />
+          </svg>
+        </button>
+        <button type={'button'} className={'mt-1 btn btn-danger'} onClick={this.openBookmark} title={'Oldal kinyitása a könyvjelzőhöz'}>
+          <svg xmlns={'http://www.w3.org/2000/svg'} width={'16'} height={'16'} fill={'currentColor'} className={'bi bi-bookmark-plus'} viewBox={'0 0 16 16'}>
+            <path fillRule={'evenodd'} d={'M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z'} />
+            <path d={'M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z'} />
+          </svg>
+        </button>
         <HTMLFlipBook
           width={550}
           height={733}
@@ -198,19 +216,6 @@ class ImageBook extends React.Component {
           {this.state.pages}
         </HTMLFlipBook>
 
-
-        <button type={'button'} className={'mt-1 btn btn-success'} onClick={this.addPageToBookmark} title={'Oldal könyvjelzőzése'}>
-          <svg xmlns={'http://www.w3.org/2000/svg'} width={'16'} height={'16'} fill={'currentColor'} className={'bi bi-bookmark-plus'} viewBox={'0 0 16 16'}>
-            <path fillRule={'evenodd'} d={'M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z'} />
-            <path d={'M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z'} />
-          </svg>
-        </button>
-        <button type={'button'} className={'mt-1 btn btn-danger'} onClick={this.openBookmark} title={'Oldal kinyitása a könyvjelzőhöz'}>
-          <svg xmlns={'http://www.w3.org/2000/svg'} width={'16'} height={'16'} fill={'currentColor'} className={'bi bi-bookmark-plus'} viewBox={'0 0 16 16'}>
-            <path fillRule={'evenodd'} d={'M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z'} />
-            <path d={'M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z'} />
-          </svg>
-        </button>
         {/* <div className='pageturner-container'>
           <div>
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import './Page.scss';;
 
 const PageCover = React.forwardRef((props, ref) => {
   return (
@@ -15,27 +16,23 @@ const Page = React.forwardRef((props, ref) => {
   return (
     <div className={pageClass} ref={ref} data-density={props.density | "soft"}>
       <div className="page-content">
-        <h2 className="page-header">{props.imageCaption}</h2>
-        {/* {(props.image !== undefined) ?
-          <div
-            className="page-image"
-            style={{ backgroundImage: "url(" + props.image + ")" }}
-            onClick={showFullImage}
-          ></div> : null
-        } */}
+        {(props.pageTitle !== undefined) ?
+          <h2 className="page-header">{props.pageTitle}</h2> : null
+        }
         {(props.image !== undefined) ?
           <div className="page-image">
-            <img
-              alt={props.imageCaption}
-              src={props.image}
-              // style={{ backgroundImage: "url(" + props.image + ")", objectFit: 'contain' }}
-              onClick={showFullImage}
-              onLoad={setDimensions}
-            ></img>
+            <figure>
+              <img
+                alt={props.imageCaption}
+                src={props.image}
+                onClick={showFullImage}
+                onLoad={setDimensions}
+              ></img>
+              <figcaption>{props.imageCaption}</figcaption>
+            </figure>
           </div>
           : null
         }
-        {/* <figcaption>{props.imageCaption}</figcaption> */}
         {(props.children) ? <div className="page-text">{props.children}</div> : null}
         <div className="page-footer">{isNaN(props.pageNumber) ? '' : props.pageNumber}</div>
       </div>
