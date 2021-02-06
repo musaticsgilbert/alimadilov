@@ -91,17 +91,19 @@
     }
 }
 
-// https://codepen.io/davidcw/pen/VYMxbj
-.bookmark{ 
-    position:absolute;
-    top:0;
-    left:20px;
-    height:10vh;
-    width:10px;
-    padding: 0px; 
-    -webkit-transform: rotate(0deg) skew(0deg); 
-    transform: rotate(0deg) skew(0deg); 
-    border-left: 25px solid red; 
-    border-right: 25px solid red; 
-    border-bottom: 25px solid transparent; 
+
+.bookmark{
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    width: 50px;
+    cursor: pointer;
+
+    outline: none;
+    transition: transform 0.15s linear;
+    &:hover {
+        .bookmark {
+            transform: scale(1.1);
+        }
+    }
 }

@@ -64,7 +64,7 @@ class ImageBook extends React.Component {
   // Lifecycle management
   componentDidMount() {
     const page = this.setupRoute();
-    const bookmark = localStorage.getItem('bookmark');
+    const bookmark = Number(localStorage.getItem('bookmark'));
 
     this.setState((state, props) => ({
       totalPage: this.flipBook.getPageFlip().getPageCount(),
@@ -115,8 +115,8 @@ class ImageBook extends React.Component {
   }
 
   flipToPage = () => {
-    // console.log(this.state.page);
-    this.flipBook.getPageFlip().flip(this.state.page + 1);
+    console.log(this.state.page);
+    this.flipBook.getPageFlip().flip(Number(this.state.page) + 1);
   }
 
   addPageToBookmark = () => {
@@ -128,10 +128,11 @@ class ImageBook extends React.Component {
   }
 
   openBookmark = () => {
+    console.log(this.state);
     this.setState((state, props) => ({
       page: this.state.bookmark
     }), () => {
-      this.flipToPage(this.state.bookmark);
+      this.flipToPage();
     });
   }
 
@@ -200,7 +201,7 @@ class ImageBook extends React.Component {
           flippingTime={700}
           showCover={true}
           mobileScrollSupport={true}
-          clickEventForward={['img', 'button', 'a']}
+          clickEventForward={['img', 'button', 'a', 'svg']}
           drawShadow={true}
           swipeDistance={0}
           useMouseEvents={true}
