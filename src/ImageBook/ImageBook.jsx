@@ -1,25 +1,16 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react'
-import HTMLFlipBook from "m-react-pageflip";
-import "./ImageBook.scss";
-import { Page, PageCover } from "./Page/Page";
+import HTMLFlipBook from 'm-react-pageflip';
+import './ImageBook.scss';
+import { Page, PageCover } from './Page/Page';
 
 class ImageBook extends React.Component {
   constructor(props) {
     super(props);
 
     const pages = [
-      <PageCover key={0} pos="top">Alim Adilov képeskönyve</PageCover>,
-      <Page key={1} imageCaption={"Tartalomjegyzék"}>
-        <ol>
-          <li><a href="1" onClick={this.navigateToPage}>Önéletrajz</a></li>
-          <li><a href="2" onClick={this.navigateToPage}>Tengerparton</a></li>
-          <li><a href="3" onClick={this.navigateToPage}>Cserépedények</a></li>
-          <li><a href="4" onClick={this.navigateToPage}>Virágok az ablakban</a></li>
-          <li><a href="5" onClick={this.navigateToPage}>Átjáró</a></li>
-        </ol>
-      </Page>,
-      <Page key={2} number={1} imageCaption={"Önéletrajz"}>
+      <PageCover key={0} pos='top'>Alim Adilov képeskönyve</PageCover>,
+      <Page key={1} pageNumber={1} imageCaption={'Önéletrajz'}>
         {/* <article style={{ padding: '2%' }}>
           Alim Adilov is a painter, was born in 1963, Taskent, Uzbekistan.
           During his elementary studies he was enrolled to the best drawing course in the city.<br />
@@ -44,19 +35,29 @@ class ImageBook extends React.Component {
           Állandó kiállítás: Madeira
         </article>
       </Page>,
-      <Page key={3} number={2} image={process.env.PUBLIC_URL + "/h608.jpg"} imageCaption={"Tengerparton"}></Page>,
-      <Page key={4} number={3} image={process.env.PUBLIC_URL + "/h503.jpg"} imageCaption={"Cserépedények"}></Page>,
-      <Page key={5} number={4} image={process.env.PUBLIC_URL + "/h607.jpg"} imageCaption={"Virágok az ablakban"}></Page>,
-      <Page key={6} number={5} image={process.env.PUBLIC_URL + "/f1014.jpg"} imageCaption={"Átjáró"}></Page>,
-      <PageCover key={7} pos="bottom">  </PageCover>
+      <Page key={2} pageNumber={2} imageCaption={'Tartalomjegyzék'}>
+        <ol>
+          <li><a href='1' onClick={this.navigateToPage}>Önéletrajz</a></li>
+          <li><a href='2' onClick={this.navigateToPage}>Tengerparton</a></li>
+          <li><a href='3' onClick={this.navigateToPage}>Cserépedények</a></li>
+          <li><a href='4' onClick={this.navigateToPage}>Virágok az ablakban</a></li>
+          <li><a href='5' onClick={this.navigateToPage}>Átjáró</a></li>
+        </ol>
+      </Page>,
+      <Page key={3} pageNumber={3} image={process.env.PUBLIC_URL + '/h608.jpg'} imageCaption={'Tengerparton'}></Page>,
+      <Page key={4} pageNumber={4} image={process.env.PUBLIC_URL + '/h503.jpg'} imageCaption={'Cserépedények'}></Page>,
+      <Page key={5} pageNumber={5} image={process.env.PUBLIC_URL + '/h607.jpg'} imageCaption={'Virágok az ablakban'}></Page>,
+      <Page key={6} pageNumber={6} image={process.env.PUBLIC_URL + '/f1014.jpg'} imageCaption={'Átjáró'}></Page>,
+      <PageCover key={7} pos='bottom'></PageCover>
     ]
 
     this.state = {
+      bookmark: null,
       page: 0,
-      totalPage: 0,
+      pages: pages,
       orientation: 'landscape',
       state: 'read',
-      pages: pages
+      totalPage: 0,
     };
   }
 
@@ -92,7 +93,6 @@ class ImageBook extends React.Component {
   }
 
   onChangeState = (e) => {
-    // console.log(e);
     this.setState((state, props) => ({
       state: e.data,
     }));
@@ -115,25 +115,43 @@ class ImageBook extends React.Component {
 
   // https://stackoverflow.com/a/175787
   isNumeric(str) {
-    if (typeof str != "string") return false // we only process strings!
+    if (typeof str != 'string') return false // we only process strings!
     return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
       !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
   }
 
-  componentDidMount() {
+  addPageToBookmark = () => {
+    this.setState((state, props) => ({
+      bookmark: this.state.page
+    }), () => {
+      localStorage.setItem('bookmark', this.state.bookmark);
+    });
+  }
 
-    var page = this.setupRoute();
+  openBookmark = () => {
+    this.setState((state, props) => ({
+      page: this.state.bookmark
+    }), () => {
+      this.flipToPage(this.state.bookmark);
+    });
+  }
+
+  componentDidMount() {
+    const page = this.setupRoute();
+    const bookmark = localStorage.getItem('bookmark');
+
     this.setState((state, props) => ({
       totalPage: this.flipBook.getPageFlip().getPageCount(),
-      page: page
+      page: page,
+      bookmark: bookmark
     }), () => {
-      // this.flipToPage();
+      this.flipToPage();
     });
   }
 
   setupRoute() {
-    console.log('window.location.pathname', window.location.pathname)
-    var page = 0;
+    console.log('TODO: window.location.pathname', window.location.pathname)
+    let page = 0;
     if (this.pathArray().length > 3 || !this.isNumeric(this.pathArray()[2])) {
       history.pushState(window.location.pathname, '', '/book/0');
     } else {
@@ -148,14 +166,14 @@ class ImageBook extends React.Component {
 
   render() {
     return (
-      // <div className="no-select book-container"
-      <div className="book-container container-md"
+      // <div className='no-select book-container'
+      <div className='book-container container-md'
       // style={{ maxHeight: '100vh', maxWidth: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}
       >
         <HTMLFlipBook
           width={550}
           height={733}
-          size="stretch"
+          size='stretch'
           minWidth={315}
           minHeight={400}
           maxWidth={1000}
@@ -173,21 +191,34 @@ class ImageBook extends React.Component {
           onChangeOrientation={this.onChangeOrientation}
           onChangeState={this.onChangeState}
 
-          className="image-book"
+          className='image-book'
 
           ref={(el) => (this.flipBook = el)}
         >
           {this.state.pages}
         </HTMLFlipBook>
 
-        {/* <div className="pageturner-container">
+
+        <button type={'button'} className={'mt-1 btn btn-success'} onClick={this.addPageToBookmark} title={'Oldal könyvjelzőzése'}>
+          <svg xmlns={'http://www.w3.org/2000/svg'} width={'16'} height={'16'} fill={'currentColor'} className={'bi bi-bookmark-plus'} viewBox={'0 0 16 16'}>
+            <path fillRule={'evenodd'} d={'M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z'} />
+            <path d={'M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z'} />
+          </svg>
+        </button>
+        <button type={'button'} className={'mt-1 btn btn-danger'} onClick={this.openBookmark} title={'Oldal kinyitása a könyvjelzőhöz'}>
+          <svg xmlns={'http://www.w3.org/2000/svg'} width={'16'} height={'16'} fill={'currentColor'} className={'bi bi-bookmark-plus'} viewBox={'0 0 16 16'}>
+            <path fillRule={'evenodd'} d={'M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z'} />
+            <path d={'M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z'} />
+          </svg>
+        </button>
+        {/* <div className='pageturner-container'>
           <div>
 
-            <button type="button" onClick={this.prevButtonClick}>Előző oldal</button>
+            <button type='button' onClick={this.prevButtonClick}>Előző oldal</button>
 
             [<span>{this.state.page}</span> of <span> {this.state.totalPage} </span>]
 
-            <button type="button" onClick={this.nextButtonClick}>Következő oldal</button>
+            <button type='button' onClick={this.nextButtonClick}>Következő oldal</button>
           </div>
         </div> */}
       </div>

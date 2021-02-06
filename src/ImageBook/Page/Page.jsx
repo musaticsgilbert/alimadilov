@@ -37,7 +37,7 @@ const Page = React.forwardRef((props, ref) => {
         }
         {/* <figcaption>{props.imageCaption}</figcaption> */}
         {(props.children) ? <div className="page-text">{props.children}</div> : null}
-        <div className="page-footer">{isNaN(props.number) ? '' : props.number}</div>
+        <div className="page-footer">{isNaN(props.pageNumber) ? '' : props.pageNumber}</div>
       </div>
     </div>
   );
