@@ -5,7 +5,8 @@ const PageCover = React.forwardRef((props, ref) => {
   return (
     <div
       className={'page page-cover page-cover-' + props.pos}
-      style={{ backgroundImage: 'url(' + props.image + ')' }}
+      // style={{ backgroundImage: `url('${process.env.PUBLIC_URL}/logo512.png')` }}
+      // style={{ height: '1000px', backgroundImage: "url('https://im6.ezgif.com/tmp/ezgif-6-42faa7869bbf.png')" }}
       ref={ref}
       data-density='hard'
     >
