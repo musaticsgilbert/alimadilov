@@ -25,7 +25,30 @@
 
         .page-image,
         .page-image img {
-            max-height: 80vh;
+            /* smartphones, iPhone, portrait 480x320 phones */
+            @media (max-width: 320px) {
+                max-height: 10vh;
+            }
+            @media (min-width: 320px) {
+                max-height: 50vh;
+            }
+            /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+            @media (min-width: 641px) {
+                max-height: 40vh;
+            }
+            /* tablet, landscape iPad, lo-res laptops ands desktops */
+            @media (min-width: 961px) {
+                max-height: 50vh;
+            }
+            /* big landscape tablets, laptops, and desktops */
+            @media (min-width: 1025px) {
+                max-height: 60vh;
+            }
+            /* hi-res laptops and desktops */
+            @media (min-width: 1281px) {
+                max-height: 60vh;
+            }
+
             margin: 1%;
             background-size: contain;
             background-position: center center;
@@ -72,7 +95,7 @@
     }
 
     &.page-cover {
-        //   background-color: hsl(35, 45, 80);
+        background-color: hsl(35, 45, 80);
         // background: url("/public/f1014.jpg");
         color: hsl(35, 35, 35);
         border: solid 1px hsl(35, 20, 50);
