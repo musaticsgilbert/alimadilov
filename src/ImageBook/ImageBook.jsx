@@ -201,7 +201,7 @@ class ImageBook extends React.Component {
           flippingTime={700}
           showCover={true}
           mobileScrollSupport={true}
-          clickEventForward={['img', 'button', 'a', 'svg']}
+          clickEventForward={['img', 'button', 'a']}
           drawShadow={true}
           swipeDistance={0}
           useMouseEvents={true}
