@@ -1,0 +1,92 @@
+[
+  {
+    "type": "cover",
+    "pagetitle": [
+      "Alim Adilov festményei",
+      "Alim Adilov's paintings"
+    ]
+  },
+  {
+    "type": "html",
+    "pagetitle": [
+      "Önéletrajz",
+      "Autobiography"
+    ],
+    "content": [
+      {
+        "image": "alimadilov.jpg",
+        "html": "Alim Adilov Üzbegisztán fõvárosában, Taskentben született 1963 - ban és gyerekkorában elkezdett járni mûvészeti szakkörre, ahol Zója Grigorevna kiváló festõmûvésznõ tanította. 8 éves iskolai végzettség után Taskentben 4 éves Mûvészeti technikumot végzett.Katonai szolgálat után felvételizett az európai hirû szentpétervári \"Repin\" Képzõmûvészeti Akadémiara és ott 6 évig tanult, közben részt vett csoportos kiállításokban Szovjetunióban és számos külföldi országban. Az Akadémia elvégzése után elutazott Londonba, ahol részt vett a \"Canvas\" mûvészeti tanfolyamban.<br /><br />1993 óta hazánkban él és alkot. 2004-tõl a Magyar Alkotomûvészek Országos Egyesületének tagja. Többnyire vegyes technikával, vegyes témákban dolgozik. Mûvésztelepeknek rendszeres tagja.<br />\"Alim Adilov festõmûvész rohanó életünk elé olyan festményeket állít, melyekbõl sugárzik a természet varázsa és a Teremtõ jósága. Képei, mint bástyák dacolnak a háborgó világ forgatagával, idõk és korok múlásával.\"<br /><br />Csoportos kiállitások: Szentpétervár, Moszkva, Rosztov, Taskent, Tokyo, Kuala Lumpur, Budapest, Debrecen, Békéscsaba<br />Önálló kiállítások: London, Békéscsaba, Miskolc, Debrecen, Gödöllõ, Kecskemét, Budapest, Malaysia (Puchong), Kuala Lumpur<br />Állandó kiállítás: Madeira"
+      },
+      {
+        "image": "alimadilov.jpg",
+        "html": "Alim Adilov is a painter, was born in 1963, Taskent, Uzbekistan.<br />During his elementary studies he was enrolled to the best drawing course in the city.<br />In 1979 he started the secondary art school, where strict but highly skilled teachers taught him, like the Korean Emil-Ki-Gajt, who did several successful book illustrations or the internationally reputed Vitrugonszkji. In his 5th year, he learned on advanced level.<br />He grew up to become an artist who is ready to work with full responsibility.<br />After 2 years military service, he applied to the world famous Repin Art Academy.<br />After graduating he went to England where he was a designer at a big company, so soon he could start working individually. In 1991, he got a work from an elegant gallery from the London Sloan Square, to organize an exhibition from his works. All of his paintings were purchased at once.<br />After settling down in Hungary, he soon became popular both in the professional and artistic fields. Besides his professional success, he found his personal happiness and his wife. They have 2 great sons. In the next couple of years, he was the regular invited member of the art camps in Hungary and in international camps.<br />He is the member of the Hungarian Art Association.<br />His paintings are often bought because this way the buyers can take home a slice from the East, from their holiday. The vivid colors of the paintings are reflecting the beach, the market, so the owners can feel these moments in their weekdays.<br />Favourably, he works on those topics which he experienced on his journey. Cities, landscapes, houses but also portraits, still lifes. All over the world he had solo and organised exhibitions and he has a permanent exhibition on Madeira."
+      }
+    ]
+  },
+  {
+    "type": "contents",
+    "pagetitle": [
+      "Tartalomjegyzék",
+      "Contents"
+    ]
+  },
+  {
+    "type": "chapter",
+    "pagetitle": [
+      "Kategória 1",
+      "Category 1"
+    ],
+    "imagename": "h503.jpg",
+    "imagecaption": [
+      "Cserépedények",
+      "Earthenware"
+    ]
+  },
+  {
+    "type": "image",
+    "imagename": "h503.jpg",
+    "imagecaption": [
+      "Virágok az ablakban",
+      "Flowers in the window"
+    ]
+  },
+  {
+    "type": "image",
+    "imagename": "h503.jpg",
+    "imagecaption": [
+      "Átjáró",
+      "Passage"
+    ]
+  },
+  {
+    "type": "chapter",
+    "pagetitle": [
+      "Kategória 2",
+      "Category 2"
+    ],
+    "imagename": "h607.jpg",
+    "imagecaption": [
+      "Cserépedények",
+      "Earthenware"
+    ]
+  },
+  {
+    "type": "image",
+    "imagename": "h607.jpg",
+    "imagecaption": [
+      "Virágok az ablakban",
+      "Flowers in the window"
+    ]
+  },
+  {
+    "type": "image",
+    "imagename": "f1014.jpg",
+    "imagecaption": [
+      "Átjáró",
+      "Passage"
+    ]
+  },
+  {
+    "type": "cover"
+  }
+]
