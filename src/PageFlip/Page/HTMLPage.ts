@@ -202,6 +202,15 @@ export class HTMLPage extends Page {
     // this.element.style.zIndex = String(this.render.getSettings().startZIndex + 1);
   }
 
+  public clearSaved(): void {
+    this.element.classList.remove('--simple');
+
+    if (this.copiedElement !== null) {
+      this.copiedElement.remove();
+      this.copiedElement = null;
+    }
+  }
+
   public getElement(): HTMLElement {
     return this.element;
   }
