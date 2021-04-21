@@ -15,7 +15,7 @@
     "content": [
       {
         "image": "alimadilov.jpg",
-        "html": "Alim Adilov Üzbegisztán fõvárosában, Taskentben született 1963 - ban és gyerekkorában elkezdett járni mûvészeti szakkörre, ahol Zója Grigorevna kiváló festõmûvésznõ tanította. 8 éves iskolai végzettség után Taskentben 4 éves Mûvészeti technikumot végzett.Katonai szolgálat után felvételizett az európai hirû szentpétervári \"Repin\" Képzõmûvészeti Akadémiara és ott 6 évig tanult, közben részt vett csoportos kiállításokban Szovjetunióban és számos külföldi országban. Az Akadémia elvégzése után elutazott Londonba, ahol részt vett a \"Canvas\" mûvészeti tanfolyamban.<br /><br />1993 óta hazánkban él és alkot. 2004-tõl a Magyar Alkotomûvészek Országos Egyesületének tagja. Többnyire vegyes technikával, vegyes témákban dolgozik. Mûvésztelepeknek rendszeres tagja.<br />\"Alim Adilov festõmûvész rohanó életünk elé olyan festményeket állít, melyekbõl sugárzik a természet varázsa és a Teremtõ jósága. Képei, mint bástyák dacolnak a háborgó világ forgatagával, idõk és korok múlásával.\"<br /><br />Csoportos kiállitások: Szentpétervár, Moszkva, Rosztov, Taskent, Tokyo, Kuala Lumpur, Budapest, Debrecen, Békéscsaba<br />Önálló kiállítások: London, Békéscsaba, Miskolc, Debrecen, Gödöllõ, Kecskemét, Budapest, Malaysia (Puchong), Kuala Lumpur<br />Állandó kiállítás: Madeira"
+        "html": "Alim Adilov Üzbegisztán fővárosában, Taskentben született 1963-ban és gyerekkorában elkezdett járni mûvészeti szakkörre, ahol Zója Grigorevna kiváló festőművésznő tanította. 8 éves iskolai végzettség után Taskentben 4 éves Művészeti technikumot végzett. Katonai szolgálat után felvételizett az európai hirű szentpétervári \"Repin\" Képzőművészeti Akadémiara és ott 6 évig tanult, közben részt vett csoportos kiállításokban Szovjetunióban és számos külföldi országban. Az Akadémia elvégzése után elutazott Londonba, ahol részt vett a \"Canvas\" művészeti tanfolyamban.<br /><br />1993 óta hazánkban él és alkot. 2004-tõl a Magyar Alkotomûvészek Országos Egyesületének tagja. Többnyire vegyes technikával, vegyes témákban dolgozik. Mûvésztelepeknek rendszeres tagja.<br />\"Alim Adilov festőművész rohanó életünk elé olyan festményeket állít, melyekből sugárzik a természet varázsa és a Teremtő jósága. Képei, mint bástyák dacolnak a háborgó világ forgatagával, idők és korok múlásával.\"<br /><br />Csoportos kiállitások: Szentpétervár, Moszkva, Rosztov, Taskent, Tokyo, Kuala Lumpur, Budapest, Debrecen, Békéscsaba<br />Önálló kiállítások: London, Békéscsaba, Miskolc, Debrecen, Gödöllő, Kecskemét, Budapest, Malaysia (Puchong), Kuala Lumpur<br />Állandó kiállítás: Madeira"
       },
       {
         "image": "alimadilov.jpg",
@@ -81,6 +81,42 @@
   {
     "type": "image",
     "imagename": "f1014.jpg",
+    "imagecaption": [
+      "Átjáró",
+      "Passage"
+    ]
+  },
+  {
+    "type": "chapter",
+    "pagetitle": [
+      "Kategória 3",
+      "Category 3"
+    ],
+    "imagename": "h503.jpg",
+    "imagecaption": [
+      "Cserépedények",
+      "Earthenware"
+    ]
+  },
+  {
+    "type": "image",
+    "imagename": "h503.jpg",
+    "imagecaption": [
+      "Virágok az ablakban",
+      "Flowers in the window"
+    ]
+  },
+  {
+    "type": "image",
+    "imagename": "h503.jpg",
+    "imagecaption": [
+      "Átjáró",
+      "Passage"
+    ]
+  },
+  {
+    "type": "image",
+    "imagename": "h503.jpg",
     "imagecaption": [
       "Átjáró",
       "Passage"
