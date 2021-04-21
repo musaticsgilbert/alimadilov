@@ -3,6 +3,11 @@ import './Page.scss';
 
 const Page = React.forwardRef((props, ref) => {
   switch (props.type) {
+    case 'temp':
+      return <div className='page' ref={ref} data-density='soft'>
+        <div className="page-content">
+        </div>
+      </div>;
     case 'cover':
       return (
         <div
@@ -39,6 +44,7 @@ const Page = React.forwardRef((props, ref) => {
             }
             <div dangerouslySetInnerHTML={{ __html: props.content.html }}></div>
           </div>
+          <div className='page-footer'>{isNaN(props.pageNumber) ? '' : props.pageNumber}</div>
         </div>
       </div>;
 
