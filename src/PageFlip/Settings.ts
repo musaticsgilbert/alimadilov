@@ -44,7 +44,7 @@ export interface FlipSetting {
   /** Disable content scrolling when touching a book on mobile devices */
   mobileScrollSupport: boolean;
 
-  /** Set the forward event of clicking on child elements (e.g. buttons, links) */
+  /** Set the forward event of clicking on child elements (buttons, links) */
   clickEventForward: boolean | string[];
 
   /** Using mouse and touch events to page flipping */
@@ -54,6 +54,9 @@ export interface FlipSetting {
 
   /** if this value is true, fold the corners of the book when the mouse pointer is over them. */
   showPageCorners: boolean;
+
+  /** if this value is true, flipping by clicking on the whole book will be locked. Only on corners */
+  disableFlipByClick: boolean;
 }
 
 export class Settings {
@@ -78,6 +81,7 @@ export class Settings {
     clickEventForward: false,
     useMouseEvents: true,
     showPageCorners: true,
+    disableFlipByClick: false,
   };
 
   /**
@@ -86,18 +90,16 @@ export class Settings {
    * @param userSetting
    * @returns {FlipSetting} Сonfiguration object
    */
-  public getSettings(userSetting: Record<string, number | string | boolean>): FlipSetting {
+  public getSettings(userSetting: Record<string, number | string | boolean | string[]>): FlipSetting {
     const result = this._default;
     Object.assign(result, userSetting);
 
     if (result.size !== SizeType.STRETCH && result.size !== SizeType.FIXED)
       throw new Error('Invalid size type. Available only "fixed" and "stretch" value');
 
-    if (result.width <= 0 || result.height <= 0)
-      throw new Error('Invalid width or height');
+    if (result.width <= 0 || result.height <= 0) throw new Error('Invalid width or height');
 
-    if (result.flippingTime <= 0)
-      throw new Error('Invalid flipping time');
+    if (result.flippingTime <= 0) throw new Error('Invalid flipping time');
 
     if (result.size === SizeType.STRETCH) {
       if (result.minWidth <= 0) result.minWidth = 100;

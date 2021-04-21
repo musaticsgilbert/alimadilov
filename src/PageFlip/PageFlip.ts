@@ -42,7 +42,7 @@ export class PageFlip extends EventObject {
    * @param {HTMLElement} inBlock - Root HTML Element
    * @param {Object} setting - Configuration object
    */
-  constructor(inBlock: HTMLElement, setting: Record<string, number | string | boolean>) {
+  constructor(inBlock: HTMLElement, setting: Partial<FlipSetting>) {
     super();
 
     this.setting = new Settings().getSettings(setting);
@@ -103,7 +103,7 @@ export class PageFlip extends EventObject {
   public loadFromHTML(items: NodeListOf<HTMLElement> | HTMLElement[]): void {
     this.ui = new HTMLUI(this.block, this, this.setting, items);
 
-    this.render = new HTMLRender(this, this.setting, this.ui.getDistElement(), items);
+    this.render = new HTMLRender(this, this.setting, this.ui.getDistElement());
 
     this.flipController = new Flip(this.render, this);
 
@@ -155,13 +155,21 @@ export class PageFlip extends EventObject {
     this.pages = new HTMLPageCollection(this, this.render, this.ui.getDistElement(), items);
     this.pages.load();
     (this.ui as HTMLUI).updateItems(items);
-    (this.render as HTMLRender).updatePages();
+    this.render.reload();
 
     this.pages.show(current);
     this.trigger('update', this, {
       page: current,
       mode: this.render.getOrientation(),
     });
+  }
+
+  /**
+   * Clear pages from HTML (remove to initinalState)
+   */
+  public clear(): void {
+    this.pages.destroy();
+    (this.ui as HTMLUI).clear();
   }
 
   /**
@@ -212,6 +220,7 @@ export class PageFlip extends EventObject {
    * @param {FlipCorner} corner - Active page corner when turning
    */
   public flip(page: number, corner: FlipCorner = FlipCorner.TOP): void {
+    console.log('flipto', page);
     this.flipController.flipToPage(page, corner);
   }
 
@@ -230,6 +239,7 @@ export class PageFlip extends EventObject {
    * @param {number} newPage - New page Number
    */
   public updatePageIndex(newPage: number): void {
+    console.log('flip', this, newPage);
     this.trigger('flip', this, newPage);
   }
 

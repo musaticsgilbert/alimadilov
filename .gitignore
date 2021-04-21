@@ -28,4 +28,5 @@ yarn-error.log*
 /src/DemoBlock.scss
 /src/DemoBlock.jsx
 
-/src/old_PageFlip
+/src/old1_PageFlip
+/src/old2_PageFlip
