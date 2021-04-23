@@ -7,8 +7,7 @@ import { Page } from './Page/Page';
 import Router from '../Router';
 
 const ImageBook = () => {
-  // const [language, setLanguage] = useState(0);
-  const [language] = useState(0);
+  const [language, setLanguage] = useState(0);
   // const [renderedPages, setRenderedPages] = useState([<Page type="cover" key="1"></Page>, <Page type="cover" key="2"></Page>, <Page type="cover" key="3"></Page>, <Page type="cover" key="4"></Page>, <Page type="cover" key="5"></Page>, <Page type="cover" key="6"></Page>,]);
   const [renderedPages, setRenderedPages] = useState([]);
   const [pageMap, setPageMap] = useState();
@@ -40,55 +39,60 @@ const ImageBook = () => {
         // console.log(window.innerWidth);
         // const isMobile = window.innerWidth < 1440;
 
-        const pageData = preparePages(pageArray);
+        const _pageData = preparePages(pageArray);
 
-        pageData.pages[pageData.pageOfContents - 1] = <Page
+        _pageData.pages[_pageData.pageOfContents - 1] = <Page
           type='contents'
-          key={pageData.pageOfContents - 1}
-          pageNumber={pageData.pageOfContents - 1}
-          pageTitle={pageData.pages[pageData.pageOfContents - 1].props.pageTitle}
+          key={_pageData.pageOfContents - 1}
+          pageNumber={_pageData.pageOfContents - 1}
+          pageTitle={_pageData.pages[_pageData.pageOfContents - 1].props.pageTitle}
         >
           <ul className='contents'>
-            {pageData.chapters.map((chapter, i) =>
+            {_pageData.chapters.map((chapter, i) =>
               <li key={i}><a href={((routingStrategy === 'hash') ? '#/' : '') + String(chapter.pagenumber)} onClick={navigateToPage}>{chapter.pagetitle[language]}</a></li>
             )}
           </ul>
         </Page>;
 
         const initialNumOfRenderedPages = 3;
-        const renderedPages = pageData.pages.slice(0, initialNumOfRenderedPages).concat(pageData.pages.slice(initialNumOfRenderedPages, pageData.pages.length).map(page => <Page type="temp" key={page.props.pageNumber} pageNumber={page.props.pageNumber}></Page>));
+        const _renderedPages = _pageData.pages.slice(0, initialNumOfRenderedPages).concat(_pageData.pages.slice(initialNumOfRenderedPages, _pageData.pages.length).map(page => <Page type="temp" key={page.props.pageNumber} pageNumber={page.props.pageNumber}></Page>));
 
 
-        const pageMap = new Array(initialNumOfRenderedPages).reduce((res, page, i) => {
+        const _pageMap = new Array(initialNumOfRenderedPages).reduce((res, page, i) => {
           res[i] = true;
           return res;
         }, {});
 
         for (let i = 0; i < initialNumOfRenderedPages; i++) {
-          pageMap[i] = true;
+          _pageMap[i] = true;
         }
 
-        console.log('pageMap', pageMap);
+        console.log('pageMap', _pageMap);
 
-        const router = new Router({ mode: routingStrategy });
+        const _router = new Router({ mode: routingStrategy });
         // console.log(router.getFragment());
 
         // const page = this.setupRoute();
-        let page = 0;
-        if (isNumeric(router.getFragment())) {
-          page = Number(router.getFragment());
+        let _page = 0;
+        if (isNumeric(_router.getFragment())) {
+          _page = Number(_router.getFragment());
         } else {
-          router.navigate('/0');
+          _router.navigate('/0');
         }
-        const bookmark = Number(localStorage.getItem('bookmark'));
+        const _bookmark = Number(localStorage.getItem('bookmark'));
 
-        setRenderedPages(renderedPages);
-        setPageData(pageData);
-        setPageMap(pageMap);
-        setRouter(router);
-        setPage(page);
-        setBookmark(bookmark);
+        let update = updateRenderedPages(_renderedPages, _pageMap, _pageData);
+        setRenderedPages(() => update.updatedRenderedPages);
+        setPageMap(() => update.updatedPageMap);
 
+        // setRenderedPages(_renderedPages);
+        // setPageMap(_pageMap);
+        setPageData(_pageData);
+        setRouter(_router);
+        setPage(_page);
+        setBookmark(_bookmark);
+
+        // updateRenderedPages();
       }, err => {
         alert('Nem sikerült betölteni az oldalt!');
         console.error(err);
@@ -100,7 +104,7 @@ const ImageBook = () => {
     return () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     // if (tempCounter < 2) {
@@ -109,7 +113,6 @@ const ImageBook = () => {
     // }
     const flipToPage = () => {
       // console.log('state', { language, renderedPages, pageData, routingStrategy, bookmark, page, router, flipBook });
-      console.log('page', page);
       if (renderedPages.length >= page) {
         // flipBook.current.pageFlip().flip(Number(page));
         flipBook.current.flip(Number(page));
@@ -122,24 +125,10 @@ const ImageBook = () => {
       }
     };
 
-    // lazy loading of pages
-    const updateRenderedPages = () => {
-      const updatedRenderedPages = [...renderedPages];
-      const updatedPageMap = { ...pageMap };
-      for (let i = page - 5; i < page + 5; i++) {
-        if (i < 0 || i > renderedPages.length - 1) continue;
-        if (pageMap[i] !== undefined) continue;
-
-        updatedRenderedPages[i] = pageData.pages[i];
-        updatedPageMap[i] = true;
-      }
-
-      setRenderedPages(() => updatedRenderedPages);
-      setPageMap(() => updatedPageMap);
-    }
-
     if (flipBook.current !== undefined && pageMap !== null && renderedPages.length >= page) {
-      updateRenderedPages();
+      let update = updateRenderedPages(renderedPages, pageMap, pageData);
+      setRenderedPages(() => update.updatedRenderedPages);
+      setPageMap(() => update.updatedPageMap);
       // TODO: A weird race condition bug in very fast environments most of the time makes the initial flip referenced by the URL to be skipped and instead turns to page 1.
       // Since the useState setters cannot be subscribed here and I don't know React or more specifically Hooks that much, I will just put a bit of a timeout here to let the state changes happen before flipping.
       // Should fix after getting more experience about state updates.
@@ -161,6 +150,25 @@ const ImageBook = () => {
   useEffect(() => {
     console.log('pageData', pageData);
   }, [pageData]);
+
+  // lazy loading of pages
+  const updateRenderedPages = (_renderedPages, _pageMap, _pageData) => {
+    const updatedRenderedPages = [..._renderedPages];
+    const updatedPageMap = { ..._pageMap };
+    for (let i = page - 5; i < page + 5; i++) {
+      if (i < 0 || i > _renderedPages.length - 1) continue;
+      if (_pageMap[i] !== undefined) continue;
+
+      updatedRenderedPages[i] = _pageData.pages[i];
+      updatedPageMap[i] = true;
+    }
+
+    return { updatedRenderedPages, updatedPageMap };
+  }
+
+  useEffect(() => {
+    console.log('Change');
+  });
 
   // Event handlers
 
@@ -304,6 +312,10 @@ const ImageBook = () => {
     return pages;
   }
 
+  const changeLanguage = () => {
+    setLanguage(language => (language === 1) ? 0 : 1);
+  }
+
 
   // const createPage = (page, pagenumber, language) => {
   //   return <Page
@@ -345,6 +357,7 @@ const ImageBook = () => {
         </svg>
       </button>
       <span>{bookmark}</span>
+      <button onClick={changeLanguage}>Click</button>
       {(renderedPages.length > 0) ?
         <HTMLFlipBook
           width={550}

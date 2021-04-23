@@ -220,7 +220,6 @@ export class PageFlip extends EventObject {
    * @param {FlipCorner} corner - Active page corner when turning
    */
   public flip(page: number, corner: FlipCorner = FlipCorner.TOP): void {
-    console.log('flipto', page);
     this.flipController.flipToPage(page, corner);
   }
 
@@ -239,7 +238,6 @@ export class PageFlip extends EventObject {
    * @param {number} newPage - New page Number
    */
   public updatePageIndex(newPage: number): void {
-    console.log('flip', this, newPage);
     this.trigger('flip', this, newPage);
   }
 
