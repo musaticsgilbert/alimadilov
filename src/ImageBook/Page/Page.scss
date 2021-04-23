@@ -78,12 +78,35 @@
         .page-text {
             height: 100%;
             flex-grow: 1;
-            font-size: 80%;
             text-align: justify;
             margin-top: 10px;
             padding-top: 10px;
             box-sizing: border-box;
             border-top: solid 1px hsl(35, 55, 90);
+
+            /* smartphones, iPhone, portrait 480x320 phones */
+            @media (max-width: 320px) {
+              font-size: 110%;
+            }
+            @media (min-width: 320px) {
+              font-size: 110%;
+            }
+            /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+            @media (min-width: 641px) {
+              font-size: 90%;
+            }
+            /* tablet, landscape iPad, lo-res laptops ands desktops */
+            @media (min-width: 1000px) {
+              font-size: 100%;
+            }
+            /* big landscape tablets, laptops, and desktops */
+            @media (min-width: 1025px) {
+              font-size: 110%;
+            }
+            /* hi-res laptops and desktops */
+            @media (min-width: 1281px) {
+              font-size: 120%;
+            }
         }
 
         .page-footer {

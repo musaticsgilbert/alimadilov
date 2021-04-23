@@ -6,6 +6,8 @@ const Page = React.forwardRef((props, ref) => {
     case 'temp':
       return <div className='page' ref={ref} data-density='soft'>
         <div className="page-content">
+          &nbsp;
+          <div className='page-footer'>{isNaN(props.pageNumber) ? '' : props.pageNumber}</div>
         </div>
       </div>;
     case 'cover':
@@ -42,7 +44,7 @@ const Page = React.forwardRef((props, ref) => {
             {(props.content.image !== null && props.content.image !== '') ?
               <img style={{ margin: '1%', float: 'left' }} src={process.env.PUBLIC_URL + '/' + props.content.image} width='40%' alt=""></img> : null
             }
-            <div dangerouslySetInnerHTML={{ __html: props.content.html }}></div>
+            <div dangerouslySetInnerHTML={{ __html: props.content.html.outerHTML }}></div>
           </div>
           <div className='page-footer'>{isNaN(props.pageNumber) ? '' : props.pageNumber}</div>
         </div>

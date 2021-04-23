@@ -7,7 +7,6 @@ import { Page } from './Page/Page';
 import Router from '../Router';
 
 const ImageBook = () => {
-
   // const [language, setLanguage] = useState(0);
   const [language] = useState(0);
   // const [renderedPages, setRenderedPages] = useState([<Page type="cover" key="1"></Page>, <Page type="cover" key="2"></Page>, <Page type="cover" key="3"></Page>, <Page type="cover" key="4"></Page>, <Page type="cover" key="5"></Page>, <Page type="cover" key="6"></Page>,]);
@@ -43,7 +42,12 @@ const ImageBook = () => {
 
         const pageData = preparePages(pageArray);
 
-        pageData.pages[pageData.pageOfContents] = <Page type='contents' key={pageData.pageOfContents} pageNumber={pageData.pageOfContents} pageTitle={pageArray[pageData.pageOfContents].pagetitle[language]}>
+        pageData.pages[pageData.pageOfContents - 1] = <Page
+          type='contents'
+          key={pageData.pageOfContents - 1}
+          pageNumber={pageData.pageOfContents - 1}
+          pageTitle={pageData.pages[pageData.pageOfContents - 1].props.pageTitle}
+        >
           <ul className='contents'>
             {pageData.chapters.map((chapter, i) =>
               <li key={i}><a href={((routingStrategy === 'hash') ? '#/' : '') + String(chapter.pagenumber)} onClick={navigateToPage}>{chapter.pagetitle[language]}</a></li>
@@ -151,7 +155,7 @@ const ImageBook = () => {
   }, [bookmark]);
 
   useEffect(() => {
-    console.log('renderedPages-----', renderedPages);
+    console.log('renderedPages', renderedPages);
   }, [renderedPages]);
 
   useEffect(() => {
@@ -188,49 +192,116 @@ const ImageBook = () => {
   // }
 
   const preparePages = (pageArray) => {
-    return pageArray.reduce((res, page, i) => {
+    return pageArray.reduce((res, page, index) => {
       if (page.type === 'chapter') res.chapters.push({
         pagetitle: page.pagetitle,
-        pagenumber: i
+        pagenumber: res.pageCount
       });
       if (page.type === 'contents') {
-        res.pageOfContents = i;
+        // We want to have the links on the right side
+        if (res.pageCount % 2 === 1) {
+          res.pages.push(<Page type="temp" key={res.pageCount} pageNumber={res.pageCount}></Page>);
+          res.pageCount += 1;
+        }
+        res.pageOfContents = res.pageCount + 1;
+      }
+      if (index + 1 === pageArray.length) {
+        if (res.pageCount % 2 === 0) {
+          res.pages.push(<Page type="temp" key={res.pageCount} pageNumber={res.pageCount}></Page>);
+          res.pageCount += 1;
+        }
       }
 
-      let inputProps = {
-        key: i,
-        pageNumber: i,
-        type: page.type,
-        pageTitle: (page.pagetitle) ? page.pagetitle[language] : undefined
-      };
-      if (i === 0) {
-        inputProps.bookmark = true;
-        inputProps.onBookmark = openBookmark;
-        inputProps.pos = 'top';
-      }
-      if (i === pageArray.length - 1) {
-        inputProps.pos = 'bottom';
-      }
-      if (page.imagename) {
-        inputProps.image = process.env.PUBLIC_URL + '/' + page.imagename;
-        inputProps.imageCaption = page.imagecaption[language]
-      }
       if (page.type === 'html') {
-        inputProps.content = page.content[language];
+        // On a 480x720 display the text content would probably have these width-height parameters
+        const htmlpages = cutHTMLIntoPieces(page.content[language].html, 420, 500);
+        let minipages = htmlpages.map((p, i) => {
+          return <Page
+            key={res.pageCount + i}
+            pageNumber={res.pageCount + i}
+            type={page.type}
+            pageTitle={page.pagetitle[language]}
+            content={(i === 0) ? { image: page.content[language].image, html: p } : { image: null, html: p }}
+          ></Page>
+        });
+        minipages.forEach(p => res.pages.push(p));
+        res.pageCount += htmlpages.length;
+
+      } else {
+        let inputProps = {
+          key: res.pageCount,
+          pageNumber: res.pageCount,
+          type: page.type,
+          pageTitle: (page.pagetitle) ? page.pagetitle[language] : undefined
+        };
+        if (res.pageCount === 0) {
+          inputProps.bookmark = true;
+          inputProps.onBookmark = openBookmark;
+          inputProps.pos = 'top';
+        }
+        if (res.pageCount === pageArray.length - 1) {
+          inputProps.pos = 'bottom';
+        }
+        if (page.imagename) {
+          inputProps.image = process.env.PUBLIC_URL + '/' + page.imagename;
+          inputProps.imageCaption = page.imagecaption[language]
+        }
+
+        res.pages.push(
+          <Page
+            {...inputProps}
+          ></Page>
+        );
+        res.pageCount += 1;
       }
 
-      res.pages.push(
-        <Page
-          {...inputProps}
-        ></Page>
-      );
       return res;
 
     }, {
       chapters: [],
+      pageCount: 0,
       pageOfContents: 0,
       pages: []
     });
+  }
+
+  const cutHTMLIntoPieces = (content, width, height) => {
+    let hiddendiv = document.createElement('div');
+    hiddendiv.id = 'hiddendiv';
+    hiddendiv.style.width = width + 'px';
+    hiddendiv.style.visibility = 'hidden';
+    hiddendiv.style.fontSize = '120%';
+    hiddendiv.innerHTML = content;
+    let arr = [];
+
+    document.body.appendChild(hiddendiv);
+
+    hiddendiv.childNodes.forEach(node => {
+      if (node.nodeType === 3) {
+        arr.push(node.textContent);
+      } else {
+        arr.push(node.outerHTML);
+      }
+    });
+    hiddendiv.innerHTML = '';
+
+    let pages = [];
+    let pageIndex = 0;
+
+    pages[0] = document.createElement('article');
+
+    for (let i = 0; i < arr.length; i++) {
+      hiddendiv.innerHTML += arr[i];
+      if (hiddendiv.clientHeight > height) {
+        pageIndex += 1;
+        pages[pageIndex] = document.createElement('article');
+        hiddendiv.innerHTML = '';
+      }
+      pages[pageIndex].innerHTML += arr[i];
+    }
+
+    document.body.removeChild(hiddendiv);
+    return pages;
   }
 
 
@@ -317,6 +388,4 @@ const ImageBook = () => {
     </div>
   );
 }
-
-
 export default ImageBook;
