@@ -30,3 +30,5 @@ yarn-error.log*
 
 /src/old1_PageFlip
 /src/old2_PageFlip
+
+/public
