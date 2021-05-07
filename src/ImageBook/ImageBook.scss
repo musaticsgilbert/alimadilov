@@ -9,7 +9,7 @@
 
 .book-container {
   background-size: cover;
-  height: 100vh;
+  // height: 100vh;
   // background-image: url('https://cssauthor.com/wp-content/uploads/2015/10/Old-painted-wood.jpg');
   padding: 1%;
 }
@@ -36,4 +36,50 @@
      list-style: none;
      margin-bottom: 2px;
   }
+}
+
+.overflow-child-hidden>* {
+  overflow: hidden;
+}
+
+// https://github.com/lipis/flag-icon-css
+
+.flag-icon {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  display: inline-block;
+  width: 1.33333333em;
+  line-height: 1em;
+}
+
+.flag-icon:before {
+  content: "\00a0";
+}
+
+.button {
+  padding: 5px 8px 8px 8px;
+  position: relative;
+  border: none;
+  display: inline-block;
+  box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2),
+        inset 0px -5px 0px 0px rgba(0,0,0,0.3),
+    inset 0px 2px 0px 0px rgba(255,255,255,0.5);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+.button:active {
+  box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2),
+        inset 0px -2px 0px 0px rgba(0,0,0,0.3),
+      inset 0px 2px 0px 0px rgba(255,255,255,0.5);
+  top: 3px;
 }

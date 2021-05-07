@@ -5,6 +5,7 @@ import HTMLFlipBook from '../PageFlip/react-pageflip';
 import './ImageBook.scss';
 import { Page } from './Page/Page';
 import Router from '../Router';
+import { Modal } from './Modal/Modal';
 
 const ImageBook = () => {
   const [language, setLanguage] = useState(0);
@@ -18,7 +19,7 @@ const ImageBook = () => {
   });
   // const [routingStrategy, setRoutingStrategy] = useState('hash');
   const [routingStrategy] = useState('hash')
-  const [bookmark, setBookmark] = useState();
+  // const [bookmark, setBookmark] = useState();
   const [page, setPage] = useState();
   // const [orientation, setOrientation] = useState('landscape');
   // const [orientation] = useState('landscape');
@@ -26,6 +27,7 @@ const ImageBook = () => {
   // const [totalPage, setTotalPage] = useState(0);
   const [router, setRouter] = useState();
   const flipBook = useRef();
+  const modal = useRef(null);
 
   useEffect(() => {
     fetch(process.env.PUBLIC_URL + '/pages.json', {
@@ -79,7 +81,7 @@ const ImageBook = () => {
         } else {
           _router.navigate('/0');
         }
-        const _bookmark = Number(localStorage.getItem('bookmark'));
+        // const _bookmark = Number(localStorage.getItem('bookmark'));
 
         let update = updateRenderedPages(_renderedPages, _pageMap, _pageData);
         setRenderedPages(() => update.updatedRenderedPages);
@@ -90,7 +92,7 @@ const ImageBook = () => {
         setPageData(_pageData);
         setRouter(_router);
         setPage(_page);
-        setBookmark(_bookmark);
+        // setBookmark(_bookmark);
 
         // updateRenderedPages();
       }, err => {
@@ -139,9 +141,9 @@ const ImageBook = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
-  useEffect(() => {
-    if (bookmark !== undefined) localStorage.setItem('bookmark', bookmark);
-  }, [bookmark]);
+  // useEffect(() => {
+  //   if (bookmark !== undefined) localStorage.setItem('bookmark', bookmark);
+  // }, [bookmark]);
 
   useEffect(() => {
     console.log('renderedPages', renderedPages);
@@ -185,12 +187,13 @@ const ImageBook = () => {
   //   setPage(e.data);
   // };
 
-  const addPageToBookmark = () => {
-    setBookmark(page);
-  };
+  // const addPageToBookmark = () => {
+  //   // setBookmark(page);
+  //   localStorage.setItem('bookmark', page);
+  // };
 
   const openBookmark = () => {
-    setPage(bookmark);
+    setPage(Number(localStorage.getItem('bookmark')));
   };
 
   // const updateBook = () => {
@@ -316,6 +319,10 @@ const ImageBook = () => {
     setLanguage(language => (language === 1) ? 0 : 1);
   }
 
+  const openModal = () => {
+    modal.current.open();
+  }
+
 
   // const createPage = (page, pagenumber, language) => {
   //   return <Page
@@ -342,9 +349,25 @@ const ImageBook = () => {
   }
 
   return (
-    <div className='book-container container-md'>
-      {/* <span>{this.state.isMobile}</span> */}
-      <button type={'button'} className={'mt-1 btn btn-success'} onClick={addPageToBookmark} title={'Oldal könyvjelzőzése'}>
+    <div className="d-flex flex-column">
+      {/* https://github.com/lipis/flag-icon-css */}
+      <div className="mt-1 align-self-end">
+        <button className="m-1 button" onClick={changeLanguage} title={
+          (language === 0) ? 'Switch to english language' : 'Magyar nyelvre váltás'
+        }>
+          {(language === 0) ?
+            <span><span class="flag-icon" style={{ backgroundImage: 'url(' + process.env.PUBLIC_URL + '/gb.svg)' }}></span>
+              {/* Switch to english language */}
+            </span> :
+            <span><span class="flag-icon" style={{ backgroundImage: 'url(' + process.env.PUBLIC_URL + '/hu.svg)' }}></span>
+              {/* Magyar nyelvre váltás */}
+            </span>
+          }
+        </button>
+        <button className="m-1 button" onClick={() => openModal()}>Kapcsolat</button>
+      </div>
+      <div className='book-container container-md'>
+        {/* <button type={'button'} className={'mt-1 btn btn-success'} onClick={addPageToBookmark} title={'Oldal könyvjelzőzése'}>
         <svg xmlns={'http://www.w3.org/2000/svg'} width={'16'} height={'16'} fill={'currentColor'} className={'bi bi-bookmark-plus'} viewBox={'0 0 16 16'}>
           <path fillRule={'evenodd'} d={'M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z'} />
           <path d={'M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z'} />
@@ -355,40 +378,39 @@ const ImageBook = () => {
           <path fillRule={'evenodd'} d={'M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z'} />
           <path d={'M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z'} />
         </svg>
-      </button>
-      <span>{bookmark}</span>
-      <button onClick={changeLanguage}>Click</button>
-      {(renderedPages.length > 0) ?
-        <HTMLFlipBook
-          width={550}
-          height={733}
-          size='stretch'
-          minWidth={315}
-          minHeight={400}
-          maxWidth={1000}
-          maxHeight={1533}
-          maxShadowOpacity={0.5}
-          flippingTime={700}
-          showCover={true}
-          mobileScrollSupport={true}
-          clickEventForward={['img', 'button', 'a']}
-          drawShadow={true}
-          swipeDistance={0}
-          useMouseEvents={true}
+  </button> */}
+        {(renderedPages.length > 0) ?
+          <HTMLFlipBook
+            width={550}
+            height={733}
+            size='stretch'
+            minWidth={315}
+            minHeight={400}
+            maxWidth={1000}
+            maxHeight={1533}
+            maxShadowOpacity={0.5}
+            flippingTime={700}
+            showCover={true}
+            mobileScrollSupport={true}
+            clickEventForward={['img', 'button', 'a']}
+            drawShadow={true}
+            swipeDistance={1}
+            useMouseEvents={true}
+            showPageCorners={false}
 
-          onFlip={(e) => setPage(() => {
-            // console.log(e.data);
-            return e.data;
-          })}
+            onFlip={(e) => setPage(() => {
+              // console.log(e.data);
+              return e.data;
+            })}
 
-          className='image-book'
+            className='image-book'
 
-          ref={flipBook}
-        >
-          {renderedPages}
-        </HTMLFlipBook> : null}
+            ref={flipBook}
+          >
+            {renderedPages}
+          </HTMLFlipBook> : null}
 
-      {/* <div className='pageturner-container'>
+        {/* <div className='pageturner-container'>
         <div>
 
           <button type='button' onClick={this.prevButtonClick}>Előző oldal</button>
@@ -398,6 +420,27 @@ const ImageBook = () => {
             <button type='button' onClick={this.nextButtonClick}>Következő oldal</button>
         </div>
       </div> */}
+      </div>
+      <Modal fade ref={modal}>
+        <article>
+          <h4>Festő: Alim Adilov</h4>
+          <ul>
+            <li>Email: <a href="mailto:teszt@gmail.comm">teszt@gmail.comm</a></li>
+            <li>Facebook: <a href="https://www.facebook.com/alim.adilov">Alim Adilov</a></li>
+            {/* <li>Telefon: <a href="tel:+36696666666">+36696666666</a></li> */}
+          </ul>
+        </article>
+        <article>
+          <h4>Az oldalt készítette: Musatics Gilbert</h4>
+          <ul>
+            <li>Email: <a href="musaticsgilbert@gmail.comm">musaticsgilbert@gmail.comm</a></li>
+            <li>Facebook: <a href="https://www.facebook.com/profile.php?id=100006649936298">Musatics Gilbert</a></li>
+          </ul>
+        </article>
+        <article>
+          <footer>Az oldalon használt megjelenítő: <a href="https://github.com/Nodlik/react-pageflip">React-pageflip</a></footer>
+        </article>
+      </Modal>
     </div>
   );
 }

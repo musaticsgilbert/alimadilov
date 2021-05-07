@@ -3,7 +3,7 @@
 
     background-color: hsl(35, 55, 98);
     color: hsl(35, 35, 35);
-    border: solid 1px hsl(35, 20, 70);
+    // border: solid 1px hsl(35, 20, 70);
     box-shadow: inset -7px 0 30px -7px rgba(0, 0, 0, 0.4), 0 0 20px 0 rgba(0, 0, 0, 0.5);
 
     overflow: hidden;
@@ -29,25 +29,49 @@
         .page-image .img {
             /* smartphones, iPhone, portrait 480x320 phones */
             @media (max-width: 320px) {
-                max-height: 10vh;
+              max-height: 25vh;
+              @media(orientation: landscape) {
+                max-height: 70vh;
+              }
             }
             @media (min-width: 320px) {
-                max-height: 50vh;
+              max-height: 35vh;
+              @media(orientation: landscape) {
+                max-height: 70vh;
+              }
+            }
+            @media (min-width: 480px) {
+              max-height: 50vh;
+              @media(orientation: landscape) {
+                max-height: 70vh;
+              }
             }
             /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
             @media (min-width: 641px) {
-                max-height: 40vh;
+              max-height: 30vh;
+              @media(orientation: landscape) {
+                max-height: 45vh;
+              }
+            }
+            @media (min-width: 720px) {
+              max-height: 30vh;
+              @media(orientation: landscape) {
+                max-height: 70vh;
+              }
             }
             /* tablet, landscape iPad, lo-res laptops ands desktops */
             @media (min-width: 961px) {
-                max-height: 50vh;
+              max-height: 45vh;
             }
             /* big landscape tablets, laptops, and desktops */
             @media (min-width: 1025px) {
-                max-height: 60vh;
+              max-height: 47vh;
+            }
+            @media (min-width: 1190px) {
+              max-height: 45vh;
             }
             /* hi-res laptops and desktops */
-            @media (min-width: 1281px) {
+            @media (min-width: 1200px) {
                 max-height: 60vh;
             }
 
@@ -58,21 +82,44 @@
             text-align: center;
         }
 
-        .page-image img,
-        .page-image .img {
-          cursor: pointer;
-        }
-
-        .page-image img:hover,
-        .page-image .img {
-          box-shadow: 1px 1px 7px 1px;
-        }
-
         .page-image {
-          height: 100%;
-          background-size: contain;
-          background-position: center center;
-          background-repeat: no-repeat;
+          // height: 100%;
+
+          img:hover,
+          .img {
+            box-shadow: 1px 1px 7px 1px;
+          }
+
+          img,
+          .img {
+            cursor: pointer;
+          }
+
+          figcaption {
+            /* smartphones, iPhone, portrait 480x320 phones */
+            @media (max-width: 320px) {
+              font-size: 80%;
+            }
+            @media (min-width: 320px) {
+              font-size: 90%;
+            }
+            /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+            @media (min-width: 641px) {
+              font-size: 90%;
+            }
+            /* tablet, landscape iPad, lo-res laptops ands desktops */
+            @media (min-width: 1000px) {
+              font-size: 100%;
+            }
+            /* big landscape tablets, laptops, and desktops */
+            @media (min-width: 1025px) {
+              font-size: 110%;
+            }
+            /* hi-res laptops and desktops */
+            @media (min-width: 1281px) {
+              font-size: 120%;
+            }
+          }
         }
 
         .page-text {
@@ -86,10 +133,10 @@
 
             /* smartphones, iPhone, portrait 480x320 phones */
             @media (max-width: 320px) {
-              font-size: 110%;
+              font-size: 80%;
             }
             @media (min-width: 320px) {
-              font-size: 110%;
+              font-size: 90%;
             }
             /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
             @media (min-width: 641px) {
@@ -133,7 +180,7 @@
 
     &.hard {
         background-color: hsl(35, 50, 90);
-        border: solid 1px hsl(35, 20, 50);
+        // border: solid 1px hsl(35, 20, 50);
     }
 
     &.page-cover::before {
@@ -150,7 +197,7 @@
         ),
         url(./cover.jpg);
         background-size: cover;
-        border: solid 1px hsl(35, 20, 50);
+        // border: solid 1px hsl(35, 20, 50);
         
         
         h2 {

@@ -17,17 +17,17 @@ const Page = React.forwardRef((props, ref) => {
           ref={ref}
           data-density='soft'
         >
-          {(props.bookmark === true) ?
+          {/* {(props.bookmark === true) ?
             <img
               className='bookmark'
               src={process.env.PUBLIC_URL + '/bookmark.png'}
               style={{ filter: 'invert(10%) sepia(96%) saturate(6344%) hue-rotate(1deg) brightness(121%) contrast(113%)' }}
               alt="könyvjelző"
               title='Kinyitás a könyvjelzőnél'
-              onClick={props.onBookmark}
+              onClick={() => props.onBookmark()}
             />
             : null
-          }
+          } */}
           <div className='page-content'>
             <h2>{props.pageTitle}</h2>
           </div>
