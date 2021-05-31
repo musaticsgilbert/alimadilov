@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/imagebook/static/css/main.640eba44.chunk.css",
-    "main.js": "/imagebook/static/js/main.2694fd6d.chunk.js",
-    "main.js.map": "/imagebook/static/js/main.2694fd6d.chunk.js.map",
-    "runtime-main.js": "/imagebook/static/js/runtime-main.28ac13f6.js",
-    "runtime-main.js.map": "/imagebook/static/js/runtime-main.28ac13f6.js.map",
-    "static/js/2.de77f448.chunk.js": "/imagebook/static/js/2.de77f448.chunk.js",
-    "static/js/2.de77f448.chunk.js.map": "/imagebook/static/js/2.de77f448.chunk.js.map",
-    "static/js/3.a72198ba.chunk.js": "/imagebook/static/js/3.a72198ba.chunk.js",
-    "static/js/3.a72198ba.chunk.js.map": "/imagebook/static/js/3.a72198ba.chunk.js.map",
-    "index.html": "/imagebook/index.html",
-    "static/css/main.640eba44.chunk.css.map": "/imagebook/static/css/main.640eba44.chunk.css.map",
-    "static/js/2.de77f448.chunk.js.LICENSE.txt": "/imagebook/static/js/2.de77f448.chunk.js.LICENSE.txt",
-    "static/media/index.scss": "/imagebook/static/media/background.92f61964.png",
-    "static/media/Page.scss": "/imagebook/static/media/cover-front.578c0731.jpg"
+    "main.css": "/alimadilov/static/css/main.7449c9d0.chunk.css",
+    "main.js": "/alimadilov/static/js/main.7b196d40.chunk.js",
+    "main.js.map": "/alimadilov/static/js/main.7b196d40.chunk.js.map",
+    "runtime-main.js": "/alimadilov/static/js/runtime-main.5c2ee2b0.js",
+    "runtime-main.js.map": "/alimadilov/static/js/runtime-main.5c2ee2b0.js.map",
+    "static/js/2.de77f448.chunk.js": "/alimadilov/static/js/2.de77f448.chunk.js",
+    "static/js/2.de77f448.chunk.js.map": "/alimadilov/static/js/2.de77f448.chunk.js.map",
+    "static/js/3.a72198ba.chunk.js": "/alimadilov/static/js/3.a72198ba.chunk.js",
+    "static/js/3.a72198ba.chunk.js.map": "/alimadilov/static/js/3.a72198ba.chunk.js.map",
+    "index.html": "/alimadilov/index.html",
+    "static/css/main.7449c9d0.chunk.css.map": "/alimadilov/static/css/main.7449c9d0.chunk.css.map",
+    "static/js/2.de77f448.chunk.js.LICENSE.txt": "/alimadilov/static/js/2.de77f448.chunk.js.LICENSE.txt",
+    "static/media/index.scss": "/alimadilov/static/media/background.92f61964.png",
+    "static/media/Page.scss": "/alimadilov/static/media/cover-front.578c0731.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.28ac13f6.js",
+    "static/js/runtime-main.5c2ee2b0.js",
     "static/js/2.de77f448.chunk.js",
-    "static/css/main.640eba44.chunk.css",
-    "static/js/main.2694fd6d.chunk.js"
+    "static/css/main.7449c9d0.chunk.css",
+    "static/js/main.7b196d40.chunk.js"
   ]
 }
